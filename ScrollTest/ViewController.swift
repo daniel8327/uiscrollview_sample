@@ -10,18 +10,26 @@ import UIKit
 
 class ViewController: UIViewController, UIScrollViewDelegate {
 
-    @IBOutlet var scrollview: UIScrollView!
+    @IBOutlet var headerView: UIView!
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var headerViewHeight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.scrollview.delegate = self
+        self.scrollView.delegate = self
         
-        self.navigationItem.title = "hiroor"
+        self.navigationItem.title = "hiroo"
 //        self.navigationController!.hidesBarsOnTap = true
 //        navigationController!.hidesBarsOnSwipe = true
     }
 
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        print(scrollView.contentOffset.y)
+        
+    }
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
         if(velocity.y>0) {
@@ -30,6 +38,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 self.navigationController?.setNavigationBarHidden(true, animated: true)
                 self.navigationController?.setToolbarHidden(true, animated: true)
                 print("Hide")
+                //self.headerView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0)
+                self.headerViewHeight.constant = 0
             }, completion: nil)
 
         } else {
@@ -37,6 +47,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
                 self.navigationController?.setToolbarHidden(false, animated: true)
                 print("Unhide")
+                //self.headerView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 100)
+                self.headerViewHeight.constant = 100
             }, completion: nil)
           }
        }
